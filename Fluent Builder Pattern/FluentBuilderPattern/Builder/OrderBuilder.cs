@@ -8,6 +8,8 @@ public class OrderBuilder
     private readonly List<OrderItem> _items = [];
     private Address _shippingAddress;
     private PaymentDetails _payment;
+    private Customer _customer; 
+    
 
     public OrderBuilder WithOrderId(string orderId)
     {
@@ -24,7 +26,7 @@ public class OrderBuilder
         return this;
     }
 
-    public OrderBuilder WithShippingAddress(Action<ShippingAddressBuilder> addressBuilderAction)
+    public OrderBuilder ShippedTo(Action<ShippingAddressBuilder> addressBuilderAction)
     {
         var addressBuilder = new ShippingAddressBuilder();
         addressBuilderAction(addressBuilder);
@@ -32,11 +34,21 @@ public class OrderBuilder
         return this;
     }
 
-    public OrderBuilder WithPaymentDetails(Action<OrderPaymentBuilder> paymentBuilderAction)
+    public OrderBuilder PaidBy(Action<OrderPayerBuilder> paymentBuilderAction)
     {
-        var paymentBuilder = new OrderPaymentBuilder();
+        var paymentBuilder = new OrderPayerBuilder();
         paymentBuilderAction(paymentBuilder);
         _payment = paymentBuilder.Build();
+        return this;
+    }
+    
+    // CustomerBuilder
+
+    public OrderBuilder For(Action<CustomerBuilder> customerBuilderAction)
+    {
+        var customerBuilder = new CustomerBuilder();
+        customerBuilderAction(customerBuilder);
+        _customer = customerBuilder.Build();
         return this;
     }
 
@@ -47,7 +59,9 @@ public class OrderBuilder
             OrderId = _orderId,
             Items = _items,
             ShippingAddress = _shippingAddress,
-            Payment = _payment
+            Payment = _payment,
+            Customer = _customer
+            
         };
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace FluentBuilderPattern.Models;
+﻿using FluentBuilderPattern.Builder;
+
+namespace FluentBuilderPattern.Models;
 
 public class Order
 {
@@ -6,4 +8,6 @@ public class Order
     public List<OrderItem> Items { get; set; } = new List<OrderItem>();
     public Address ShippingAddress { get; set; }
     public PaymentDetails Payment { get; set; }
+
+    public Customer Customer { get; set; }
 }

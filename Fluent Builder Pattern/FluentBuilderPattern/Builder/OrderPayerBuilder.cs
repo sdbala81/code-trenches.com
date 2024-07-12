@@ -2,25 +2,25 @@
 
 namespace FluentBuilderPattern.Builder;
 
-public class OrderPaymentBuilder
+public class OrderPayerBuilder
 {
     private string _paymentMethod;
     private decimal _totalPaid;
     private DateTime _paymentDate;
 
-    public OrderPaymentBuilder WithPaymentMethod(string paymentMethod)
+    public OrderPayerBuilder By(string paymentMethod)
     {
         _paymentMethod = paymentMethod;
         return this;
     }
 
-    public OrderPaymentBuilder WithTotalPaid(decimal totalPaid)
+    public OrderPayerBuilder OfOrderTotal(decimal totalPaid)
     {
         _totalPaid = totalPaid;
         return this;
     }
 
-    public OrderPaymentBuilder WithPaymentDate(DateTime paymentDate)
+    public OrderPayerBuilder PaidOn(DateTime paymentDate)
     {
         _paymentDate = paymentDate;
         return this;
