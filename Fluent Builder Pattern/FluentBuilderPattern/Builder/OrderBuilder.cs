@@ -4,12 +4,11 @@ namespace FluentBuilderPattern.Builder;
 
 public class OrderBuilder
 {
-    private string _orderId;
     private readonly List<OrderItem> _items = [];
-    private Address _shippingAddress;
-    private PaymentDetails _payment;
     private Customer _customer;
-    private Actor _actor;
+    private string _orderId;
+    private PaymentDetails _payment;
+    private Address _shippingAddress;
 
 
     public OrderBuilder WithOrderId(string orderId)
@@ -42,23 +41,15 @@ public class OrderBuilder
         _payment = paymentBuilder.Build();
         return this;
     }
-    
-    public OrderBuilder For(Action<CustomerBuilder> customerBuilderAction)
+
+    public OrderBuilder For(Func<GuidedCustomerBuilder, Customer> guidedCustomerBuilderFunc)
     {
-        var customerBuilder = new CustomerBuilder();
-        customerBuilderAction(customerBuilder);
-        _customer = customerBuilder.Build();
-        return this;
-    }
-    public OrderBuilder ActedBy(Func<GuidedActorBuilder, Actor> guidedActorBuilderFunc)
-    {
-        var guidedActorBuilder = new GuidedActorBuilder();
-        _actor = guidedActorBuilderFunc(guidedActorBuilder);
-        
+        var guidedActorBuilder = new GuidedCustomerBuilder();
+        _customer = guidedCustomerBuilderFunc(guidedActorBuilder);
         return this;
     }
 
-    public Order Build() 
+    public Order Build()
     {
         return new Order
         {
@@ -66,9 +57,7 @@ public class OrderBuilder
             Items = _items,
             ShippingAddress = _shippingAddress,
             Payment = _payment,
-            Customer = _customer,
-            Actor = _actor
-            
+            Customer = _customer
         };
     }
 }
