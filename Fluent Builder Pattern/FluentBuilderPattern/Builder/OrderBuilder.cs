@@ -42,9 +42,9 @@ public class OrderBuilder
         return this;
     }
 
-    public OrderBuilder For(Func<GuidedCustomerBuilder, Customer> guidedCustomerBuilderFunc)
+    public OrderBuilder For(Func<CustomerBuilder, Customer> guidedCustomerBuilderFunc)
     {
-        var guidedActorBuilder = new GuidedCustomerBuilder();
+        var guidedActorBuilder = new CustomerBuilder();
         _customer = guidedCustomerBuilderFunc(guidedActorBuilder);
         return this;
     }
