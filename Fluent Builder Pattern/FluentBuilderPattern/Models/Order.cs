@@ -10,4 +10,5 @@ public class Order
     public PaymentDetails Payment { get; set; }
 
     public Customer Customer { get; set; }
+    public Actor Actor { get; set; }
 }

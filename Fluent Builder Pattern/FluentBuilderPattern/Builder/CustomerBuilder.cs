@@ -1,10 +1,12 @@
-﻿namespace FluentBuilderPattern.Builder;
+﻿using FluentBuilderPattern.Models;
+
+namespace FluentBuilderPattern.Builder;
 
 public class CustomerBuilder
 {
     private string _firstName;
     private string _lastName;
-    private string _email;
+    private int _birthYear;
 
     public CustomerBuilder WithFirstName(string firstName)
     {
@@ -18,9 +20,9 @@ public class CustomerBuilder
         return this;
     }
 
-    public CustomerBuilder WithEmail(string email)
+    public CustomerBuilder BornIn(int birthYear)
     {
-        _email = email;
+        _birthYear = _birthYear;
         return this;
     }
 
@@ -30,14 +32,7 @@ public class CustomerBuilder
         {
             FirstName = _firstName,
             LastName = _lastName,
-            Email = _email
+            BirthYear = _birthYear
         };
     }
-}
-
-public class Customer
-{
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string Email { get; set; }
 }

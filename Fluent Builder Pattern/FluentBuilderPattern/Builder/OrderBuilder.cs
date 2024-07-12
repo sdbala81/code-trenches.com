@@ -8,8 +8,9 @@ public class OrderBuilder
     private readonly List<OrderItem> _items = [];
     private Address _shippingAddress;
     private PaymentDetails _payment;
-    private Customer _customer; 
-    
+    private Customer _customer;
+    private Actor _actor;
+
 
     public OrderBuilder WithOrderId(string orderId)
     {
@@ -42,8 +43,6 @@ public class OrderBuilder
         return this;
     }
     
-    // CustomerBuilder
-
     public OrderBuilder For(Action<CustomerBuilder> customerBuilderAction)
     {
         var customerBuilder = new CustomerBuilder();
@@ -51,8 +50,15 @@ public class OrderBuilder
         _customer = customerBuilder.Build();
         return this;
     }
+    public OrderBuilder ActedBy(Func<GuidedActorBuilder, Actor> guidedActorBuilderFunc)
+    {
+        var guidedActorBuilder = new GuidedActorBuilder();
+        _actor = guidedActorBuilderFunc(guidedActorBuilder);
+        
+        return this;
+    }
 
-    public Order Build()
+    public Order Build() 
     {
         return new Order
         {
@@ -60,7 +66,8 @@ public class OrderBuilder
             Items = _items,
             ShippingAddress = _shippingAddress,
             Payment = _payment,
-            Customer = _customer
+            Customer = _customer,
+            Actor = _actor
             
         };
     }
