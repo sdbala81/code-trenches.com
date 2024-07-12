@@ -397,6 +397,4 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-launchSettings.json
-**/.idea
-[Pp]roperties
+[Ll]aunchSettings.json
