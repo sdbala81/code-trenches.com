@@ -34,6 +34,7 @@ services.AddOpenTelemetry()
         tracing
             .AddAspNetCoreInstrumentation()
             .AddHttpClientInstrumentation()
+            .AddEntityFrameworkCoreInstrumentation()
             .AddOtlpExporter();
     });
 
@@ -50,7 +51,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.MapTicketEndpoints();
 
 

@@ -1,0 +1,11 @@
+﻿services:
+  eventbookingapi:
+    image: eventbookingapi
+    build:
+      context: .
+      dockerfile: EventBookingApi/Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Local
+      - ASPNETCORE_HTTP_PORTS=5000

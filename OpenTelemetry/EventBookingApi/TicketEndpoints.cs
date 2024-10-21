@@ -6,19 +6,29 @@ public static class TicketEndpoints
 {
     public static void MapTicketEndpoints(this WebApplication app)
     {
+        var logger = app.Logger;
+
         app.MapGet("/tickets", async (BookingContext db) =>
             await db.Tickets.ToListAsync());
 
         app.MapGet("/tickets/{id:int}", async (int id, BookingContext db) =>
-            await db.Tickets.FindAsync(id)
+        {
+            logger.LogInformation("Fetching ticket {TicketId}", id);
+
+            return await db.Tickets.FindAsync(id)
                 is Ticket ticket
                 ? Results.Ok(ticket)
-                : Results.NotFound());
+                : Results.NotFound();
+        });
 
         app.MapPost("/tickets", async (Ticket ticket, BookingContext db) =>
         {
             db.Tickets.Add(ticket);
+
             await db.SaveChangesAsync();
+
+            logger.LogInformation("Created ticket {TicketId}", ticket.Id);
+
             return Results.Created($"/tickets/{ticket.Id}", ticket);
         });
 
@@ -33,6 +43,8 @@ public static class TicketEndpoints
             ticket.Price = updatedTicket.Price;
             await db.SaveChangesAsync();
 
+            logger.LogInformation("Updated ticket {TicketId}", id);
+
             return Results.NoContent();
         });
 
@@ -44,6 +56,7 @@ public static class TicketEndpoints
             db.Tickets.Remove(ticket);
             await db.SaveChangesAsync();
 
+            logger.LogInformation("Deleted ticket {TicketId}", id);
             return Results.NoContent();
         });
     }
