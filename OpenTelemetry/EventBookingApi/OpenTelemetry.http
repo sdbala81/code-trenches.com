@@ -1,0 +1,42 @@
+@OpenTelemetry_HostAddress = http://localhost:5000
+
+### Get all tickets
+GET {{OpenTelemetry_HostAddress}}/tickets
+Accept: application/json
+
+###
+
+### Get a ticket by ID
+GET {{OpenTelemetry_HostAddress}}/tickets/1
+Accept: application/json
+
+###
+
+### Create a new ticket
+POST {{OpenTelemetry_HostAddress}}/tickets
+Content-Type: application/json
+
+{
+  "eventName": "Sample Event",
+  "bookingDate": "2023-10-01T00:00:00Z",
+  "seatNumber": "A1",
+  "price": 100.0
+}
+
+###
+
+### Update a ticket by ID
+PUT {{OpenTelemetry_HostAddress}}/tickets/1
+Content-Type: application/json
+
+{
+  "eventName": "Updated Event",
+  "bookingDate": "2023-10-02T00:00:00Z",
+  "seatNumber": "A2",
+  "price": 150.0
+}
+
+###
+
+### Delete a ticket by ID
+DELETE {{OpenTelemetry_HostAddress}}/tickets/1
