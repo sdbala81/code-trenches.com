@@ -1,4 +1,4 @@
-@OpenTelemetry_HostAddress = http://localhost:5000
+@OpenTelemetry_HostAddress = http://localhost:6000
 
 ### Get all tickets
 GET {{OpenTelemetry_HostAddress}}/tickets
@@ -39,4 +39,4 @@ Content-Type: application/json
 ###
 
 ### Delete a ticket by ID
-DELETE {{OpenTelemetry_HostAddress}}/tickets/1
+# DELETE {{OpenTelemetry_HostAddress}}/tickets/1

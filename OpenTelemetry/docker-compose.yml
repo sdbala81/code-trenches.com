@@ -1,11 +1,26 @@
 ﻿services:
-  eventbookingapi:
-    image: eventbookingapi
+  eventbooking.api:
+    image: eventbooking.api
+    container_name: eventbooking.api
     build:
       context: .
       dockerfile: EventBookingApi/Dockerfile
     ports:
-      - "5000:5000"
+      - "6000:6000"
     environment:
       - ASPNETCORE_ENVIRONMENT=Local
-      - ASPNETCORE_HTTP_PORTS=5000
+      - ASPNETCORE_HTTP_PORTS=6000
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://eventbooking.dashboard:18889
+    networks:
+      - otel
+  
+  eventbooking.dashboard:
+    image: mcr.microsoft.com/dotnet/nightly/aspire-dashboard:latest
+    container_name: dashboard
+    ports:
+      - 18888:18888
+    networks:
+      - otel
+
+networks:
+  otel:
