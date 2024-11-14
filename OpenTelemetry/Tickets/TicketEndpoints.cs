@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EventBookingApi;
+namespace Tickets;
 
 public static class TicketEndpoints
 {
@@ -23,9 +23,17 @@ public static class TicketEndpoints
 
         app.MapPost("/tickets", async (Ticket ticket, BookingContext db) =>
         {
-            db.Tickets.Add(ticket);
+            var addedTicket = db.Tickets.Add(ticket);
 
             await db.SaveChangesAsync();
+
+            TicketTelemetryConfig.TickerCounter.Add(
+                1,
+                new KeyValuePair<string, object?>("ticket", ticket),
+                new KeyValuePair<string, object?>("ticket.id", addedTicket.Entity.Id),
+                new KeyValuePair<string, object?>("ticket.created.date",
+                    addedTicket.Entity.CreatedOnUtc.Date.ToShortDateString()));
+
 
             logger.LogInformation("Created ticket {TicketId}", ticket.Id);
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EventBookingApi;
+namespace Tickets;
 
 public class BookingContext(DbContextOptions<BookingContext> options) : DbContext(options)
 {

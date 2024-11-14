@@ -1,4 +1,4 @@
-﻿namespace EventBookingApi;
+﻿namespace Tickets;
 
 public class Ticket
 {
@@ -7,4 +7,5 @@ public class Ticket
     public DateTime BookingDate { get; set; }
     public string SeatNumber { get; set; }
     public decimal Price { get; set; }
+    public DateTime CreatedOnUtc { get; set; }
 }
